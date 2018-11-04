@@ -26,10 +26,19 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    BadBloodTypeException.cpp \
+    LimiteDataLists.cpp \
+    Military.cpp \
+    Battalion.cpp
 
 HEADERS += \
-    MainWindow.hpp
+    MainWindow.hpp \
+    BadBloodTypeException.hpp \
+    LimitedDataLists.hpp \
+    Military.hpp \
+    Battalion.hpp \
+    BasicFunctionality.hpp
 
 FORMS += \
     MainWindow.ui
@@ -38,3 +47,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    BattalionData.qrc

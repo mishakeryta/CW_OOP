@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>BattalionData.json</file>
+    </qresource>
+</RCC>
