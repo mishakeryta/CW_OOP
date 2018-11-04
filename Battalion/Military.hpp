@@ -2,8 +2,12 @@
 #define MILITARY_HPP
 #include <string>
 #include <vector>
+#include <QString>
 
+#include "ParsingException.hpp"
 #include "BadBloodTypeException.hpp"
+#include <QJsonObject>
+#include "LimitedDataLists.hpp"
 
 using namespace std;
 
@@ -13,6 +17,7 @@ public:
 //конструктори
     Military();
     Military(unsigned number, const string& surname, const string& name, unsigned age,unsigned bloodType,string runk,const vector<string>& ammunition);
+    Military(const QJsonObject& jsonObj);
 
 //властивості
     Military& setNumber(unsigned number);

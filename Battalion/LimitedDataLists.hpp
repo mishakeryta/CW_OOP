@@ -7,14 +7,17 @@ using namespace std;
 class LimitedDataLists
 {
     static LimitedDataLists* data;
-    static LimitedDataLists& GetLimitedDataLists();
-public:
 
+public:
+    static LimitedDataLists& LimitedDataListsSingletone();
+
+    const vector<string>& getMilitaryProperties()const{return militaryProperties;}
 private:
     vector<string> runks;
     vector<string> ammunitions;
+    vector<string> militaryProperties;
     LimitedDataLists();
-    ~LimitedDataLists(){};
+    ~LimitedDataLists(){}
 };
 
 #endif // LIMITEDDATALISTS_H

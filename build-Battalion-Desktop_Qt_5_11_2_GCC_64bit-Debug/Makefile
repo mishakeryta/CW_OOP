@@ -51,9 +51,23 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Battalion/main.cpp \
-		../Battalion/MainWindow.cpp moc_MainWindow.cpp
+		../Battalion/MainWindow.cpp \
+		../Battalion/BadBloodTypeException.cpp \
+		../Battalion/Military.cpp \
+		../Battalion/Battalion.cpp \
+		../Battalion/ParsingException.cpp \
+		../Battalion/NoFileException.cpp \
+		../Battalion/LimitedDataLists.cpp qrc_BattalionData.cpp \
+		moc_MainWindow.cpp
 OBJECTS       = main.o \
 		MainWindow.o \
+		BadBloodTypeException.o \
+		Military.o \
+		Battalion.o \
+		ParsingException.o \
+		NoFileException.o \
+		LimitedDataLists.o \
+		qrc_BattalionData.o \
 		moc_MainWindow.o
 DIST          = ../../../Programs/5.11.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Programs/5.11.2/gcc_64/mkspecs/common/unix.conf \
@@ -244,8 +258,21 @@ DIST          = ../../../Programs/5.11.2/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Programs/5.11.2/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Programs/5.11.2/gcc_64/mkspecs/features/yacc.prf \
 		../../../Programs/5.11.2/gcc_64/mkspecs/features/lex.prf \
-		../Battalion/Battalion.pro ../Battalion/MainWindow.hpp ../Battalion/main.cpp \
-		../Battalion/MainWindow.cpp
+		../Battalion/Battalion.pro ../Battalion/MainWindow.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../Battalion/LimitedDataLists.hpp \
+		../Battalion/Military.hpp \
+		../Battalion/Battalion.hpp \
+		../Battalion/BasicFunctionality.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/NoFileException.hpp ../Battalion/main.cpp \
+		../Battalion/MainWindow.cpp \
+		../Battalion/BadBloodTypeException.cpp \
+		../Battalion/Military.cpp \
+		../Battalion/Battalion.cpp \
+		../Battalion/ParsingException.cpp \
+		../Battalion/NoFileException.cpp \
+		../Battalion/LimitedDataLists.cpp
 QMAKE_TARGET  = Battalion
 DESTDIR       = 
 TARGET        = Battalion
@@ -447,6 +474,7 @@ Makefile: ../Battalion/Battalion.pro ../../../Programs/5.11.2/gcc_64/mkspecs/lin
 		../../../Programs/5.11.2/gcc_64/mkspecs/features/yacc.prf \
 		../../../Programs/5.11.2/gcc_64/mkspecs/features/lex.prf \
 		../Battalion/Battalion.pro \
+		../Battalion/BattalionData.qrc \
 		../../../Programs/5.11.2/gcc_64/lib/libQt5Widgets.prl \
 		../../../Programs/5.11.2/gcc_64/lib/libQt5Gui.prl \
 		../../../Programs/5.11.2/gcc_64/lib/libQt5Core.prl
@@ -641,6 +669,7 @@ Makefile: ../Battalion/Battalion.pro ../../../Programs/5.11.2/gcc_64/mkspecs/lin
 ../../../Programs/5.11.2/gcc_64/mkspecs/features/yacc.prf:
 ../../../Programs/5.11.2/gcc_64/mkspecs/features/lex.prf:
 ../Battalion/Battalion.pro:
+../Battalion/BattalionData.qrc:
 ../../../Programs/5.11.2/gcc_64/lib/libQt5Widgets.prl:
 ../../../Programs/5.11.2/gcc_64/lib/libQt5Gui.prl:
 ../../../Programs/5.11.2/gcc_64/lib/libQt5Core.prl:
@@ -658,9 +687,10 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../Battalion/BattalionData.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Programs/5.11.2/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Battalion/MainWindow.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Battalion/main.cpp ../Battalion/MainWindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Battalion/MainWindow.hpp ../Battalion/BadBloodTypeException.hpp ../Battalion/LimitedDataLists.hpp ../Battalion/Military.hpp ../Battalion/Battalion.hpp ../Battalion/BasicFunctionality.hpp ../Battalion/ParsingException.hpp ../Battalion/NoFileException.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Battalion/main.cpp ../Battalion/MainWindow.cpp ../Battalion/BadBloodTypeException.cpp ../Battalion/Military.cpp ../Battalion/Battalion.cpp ../Battalion/ParsingException.cpp ../Battalion/NoFileException.cpp ../Battalion/LimitedDataLists.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Battalion/MainWindow.ui $(DISTDIR)/
 
 
@@ -685,8 +715,14 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_BattalionData.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_BattalionData.cpp
+qrc_BattalionData.cpp: ../Battalion/BattalionData.qrc \
+		../../../Programs/5.11.2/gcc_64/bin/rcc \
+		../Battalion/BattalionData.json
+	/home/misha/Programs/5.11.2/gcc_64/bin/rcc -name BattalionData ../Battalion/BattalionData.qrc -o qrc_BattalionData.cpp
+
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -696,10 +732,14 @@ moc_predefs.h: ../../../Programs/5.11.2/gcc_64/mkspecs/features/data/dummy.cpp
 compiler_moc_header_make_all: moc_MainWindow.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_MainWindow.cpp
-moc_MainWindow.cpp: ../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+moc_MainWindow.cpp: ../Battalion/Battalion.hpp \
+		../Battalion/BasicFunctionality.hpp \
+		../Battalion/Military.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonObject \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonvalue.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig.h \
@@ -721,29 +761,34 @@ moc_MainWindow.cpp: ../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindo
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstring.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qchar.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearray.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qarraydata.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringliteral.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringalgorithms.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringview.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
+		../Battalion/NoFileException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearraylist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qregexp.h \
@@ -824,15 +869,19 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
 main.o: ../Battalion/main.cpp ../Battalion/MainWindow.hpp \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../Battalion/Battalion.hpp \
+		../Battalion/BasicFunctionality.hpp \
+		../Battalion/Military.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonObject \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonvalue.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig.h \
@@ -854,29 +903,34 @@ main.o: ../Battalion/main.cpp ../Battalion/MainWindow.hpp \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstring.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qchar.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearray.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qarraydata.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringliteral.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringalgorithms.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringview.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
+		../Battalion/NoFileException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearraylist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qregexp.h \
@@ -945,10 +999,14 @@ main.o: ../Battalion/main.cpp ../Battalion/MainWindow.hpp \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Battalion/main.cpp
 
 MainWindow.o: ../Battalion/MainWindow.cpp ../Battalion/MainWindow.hpp \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../Battalion/Battalion.hpp \
+		../Battalion/BasicFunctionality.hpp \
+		../Battalion/Military.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonObject \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonvalue.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobal.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig.h \
@@ -970,29 +1028,34 @@ MainWindow.o: ../Battalion/MainWindow.cpp ../Battalion/MainWindow.hpp \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qmutex.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qnumeric.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qversiontagging.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstring.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qchar.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearray.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qarraydata.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringliteral.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringalgorithms.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringview.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
+		../Battalion/NoFileException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QMainWindow \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qmainwindow.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtguiglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qtgui-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Programs/5.11.2/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qalgorithms.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qhashfunctions.h \
-		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearraylist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringlist.h \
 		../../../Programs/5.11.2/gcc_64/include/QtCore/qregexp.h \
@@ -1071,6 +1134,131 @@ MainWindow.o: ../Battalion/MainWindow.cpp ../Battalion/MainWindow.hpp \
 		../../../Programs/5.11.2/gcc_64/include/QtWidgets/qtoolbar.h \
 		../../../Programs/5.11.2/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MainWindow.o ../Battalion/MainWindow.cpp
+
+BadBloodTypeException.o: ../Battalion/BadBloodTypeException.cpp ../Battalion/BadBloodTypeException.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BadBloodTypeException.o ../Battalion/BadBloodTypeException.cpp
+
+Military.o: ../Battalion/Military.cpp ../Battalion/Military.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonObject \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qflags.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstring.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qchar.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringview.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Military.o ../Battalion/Military.cpp
+
+Battalion.o: ../Battalion/Battalion.cpp ../Battalion/Battalion.hpp \
+		../Battalion/BasicFunctionality.hpp \
+		../Battalion/Military.hpp \
+		../Battalion/ParsingException.hpp \
+		../Battalion/BadBloodTypeException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonObject \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonvalue.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobal.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qconfig.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qlogging.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qflags.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qmutex.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnumeric.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstring.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qchar.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearray.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qrefcount.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qnamespace.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qarraydata.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringliteral.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringview.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiterator.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qpair.h \
+		../Battalion/NoFileException.hpp \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QFile \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qfile.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qiodevice.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qlist.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringlist.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qregexp.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qmetatype.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonArray \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsonarray.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QJsonDocument \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/qjsondocument.h \
+		../../../Programs/5.11.2/gcc_64/include/QtCore/QByteArray
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Battalion.o ../Battalion/Battalion.cpp
+
+ParsingException.o: ../Battalion/ParsingException.cpp ../Battalion/ParsingException.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ParsingException.o ../Battalion/ParsingException.cpp
+
+NoFileException.o: ../Battalion/NoFileException.cpp ../Battalion/NoFileException.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NoFileException.o ../Battalion/NoFileException.cpp
+
+LimitedDataLists.o: ../Battalion/LimitedDataLists.cpp ../Battalion/LimitedDataLists.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o LimitedDataLists.o ../Battalion/LimitedDataLists.cpp
+
+qrc_BattalionData.o: qrc_BattalionData.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_BattalionData.o qrc_BattalionData.cpp
 
 moc_MainWindow.o: moc_MainWindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MainWindow.o moc_MainWindow.cpp

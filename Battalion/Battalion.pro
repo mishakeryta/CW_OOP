@@ -28,9 +28,11 @@ SOURCES += \
         main.cpp \
     MainWindow.cpp \
     BadBloodTypeException.cpp \
-    LimiteDataLists.cpp \
     Military.cpp \
-    Battalion.cpp
+    Battalion.cpp \
+    ParsingException.cpp \
+    NoFileException.cpp \
+    LimitedDataLists.cpp
 
 HEADERS += \
     MainWindow.hpp \
@@ -38,7 +40,9 @@ HEADERS += \
     LimitedDataLists.hpp \
     Military.hpp \
     Battalion.hpp \
-    BasicFunctionality.hpp
+    BasicFunctionality.hpp \
+    ParsingException.hpp \
+    NoFileException.hpp
 
 FORMS += \
     MainWindow.ui

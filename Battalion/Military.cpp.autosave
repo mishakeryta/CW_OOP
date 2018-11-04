@@ -22,7 +22,7 @@ Military::Military(const QJsonObject& jsonObj)
             throw ParsingException(string("Property ") + property + " absent in json\n");
         }
     }
-
+    
 
 
 }

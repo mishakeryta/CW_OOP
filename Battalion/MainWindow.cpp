@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    Battalion battalion;
+    battalion.readFormJson(":/BattalionData.json");
 }
 
 MainWindow::~MainWindow()

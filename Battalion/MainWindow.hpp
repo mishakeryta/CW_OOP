@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
-
+#include <Battalion.hpp>
 #include <QMainWindow>
 
 namespace Ui {
