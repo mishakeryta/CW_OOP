@@ -10,10 +10,14 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QToolBar>
@@ -21,51 +25,67 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_mwBattalion
 {
 public:
     QWidget *centralWidget;
-    QTableWidget *tableWidget;
+    QTableWidget *twBattalion;
+    QPushButton *pbSave;
+    QLabel *lBattalionName;
     QMenuBar *menuBar;
+    QMenu *menuDdd;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *mwBattalion)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(400, 300);
-        centralWidget = new QWidget(MainWindow);
+        if (mwBattalion->objectName().isEmpty())
+            mwBattalion->setObjectName(QStringLiteral("mwBattalion"));
+        mwBattalion->resize(712, 300);
+        centralWidget = new QWidget(mwBattalion);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        tableWidget = new QTableWidget(centralWidget);
-        tableWidget->setObjectName(QStringLiteral("tableWidget"));
-        tableWidget->setGeometry(QRect(-5, 1, 301, 201));
-        MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
+        twBattalion = new QTableWidget(centralWidget);
+        twBattalion->setObjectName(QStringLiteral("twBattalion"));
+        twBattalion->setGeometry(QRect(20, 30, 481, 201));
+        pbSave = new QPushButton(centralWidget);
+        pbSave->setObjectName(QStringLiteral("pbSave"));
+        pbSave->setGeometry(QRect(540, 30, 97, 31));
+        lBattalionName = new QLabel(centralWidget);
+        lBattalionName->setObjectName(QStringLiteral("lBattalionName"));
+        lBattalionName->setGeometry(QRect(30, 0, 71, 23));
+        mwBattalion->setCentralWidget(centralWidget);
+        menuBar = new QMenuBar(mwBattalion);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 400, 28));
-        MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
+        menuBar->setGeometry(QRect(0, 0, 712, 28));
+        menuDdd = new QMenu(menuBar);
+        menuDdd->setObjectName(QStringLiteral("menuDdd"));
+        mwBattalion->setMenuBar(menuBar);
+        mainToolBar = new QToolBar(mwBattalion);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        statusBar = new QStatusBar(MainWindow);
+        mwBattalion->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        statusBar = new QStatusBar(mwBattalion);
         statusBar->setObjectName(QStringLiteral("statusBar"));
-        MainWindow->setStatusBar(statusBar);
+        mwBattalion->setStatusBar(statusBar);
 
-        retranslateUi(MainWindow);
+        menuBar->addAction(menuDdd->menuAction());
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        retranslateUi(mwBattalion);
+
+        QMetaObject::connectSlotsByName(mwBattalion);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *mwBattalion)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        mwBattalion->setWindowTitle(QApplication::translate("mwBattalion", "MainWindow", nullptr));
+        pbSave->setText(QApplication::translate("mwBattalion", "Read", nullptr));
+        lBattalionName->setText(QString());
+        menuDdd->setTitle(QApplication::translate("mwBattalion", "Ddd", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class mwBattalion: public Ui_mwBattalion {};
 } // namespace Ui
 
 QT_END_NAMESPACE

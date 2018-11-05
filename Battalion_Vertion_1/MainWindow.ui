@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>mwBattalion</class>
- <widget class="QMainWindow" name="mwBattalion">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>712</width>
+    <width>400</width>
     <height>300</height>
    </rect>
   </property>
@@ -14,34 +14,34 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTableWidget" name="twBattalion">
+   <widget class="QPushButton" name="pbReadFromFile">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>30</y>
-      <width>481</width>
-      <height>201</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pbSave">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>30</y>
+      <x>170</x>
+      <y>200</y>
       <width>97</width>
-      <height>31</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
      <string>Read</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lBattalionName">
+   <widget class="QTableWidget" name="twMilitaries">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>0</y>
+      <y>41</y>
+      <width>301</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lBattlionName">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
       <width>71</width>
       <height>23</height>
      </rect>
@@ -56,16 +56,10 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>712</width>
+     <width>400</width>
      <height>28</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuDdd">
-    <property name="title">
-     <string>Ddd</string>
-    </property>
-   </widget>
-   <addaction name="menuDdd"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

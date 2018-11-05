@@ -18,6 +18,9 @@ public:
     Battalion(){}
     const Battalion& readFormJson(const string& name);
     QJsonObject toJsonOnject() const;
+    const string& getName() const;
+    Military& getMilitary(size_t index);
+    vector<Military>& getMilitaries();
 private:
     string name;
     vector<Military> militaries;

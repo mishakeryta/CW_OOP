@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-11-03T21:10:54
+# Project created by QtCreator 2018-11-05T22:10:07
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Battalion
+TARGET = Battalion_Vertion_1
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,33 +26,39 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
+        MainWindow.cpp \
+    BadBloodTypeException.cpp \
+    Battalion.cpp \
+    BoodType.cpp \
+    FileException.cpp \
+    JsonPrasingAddition.cpp \
+    LimitedDataLists.cpp \
     BadBloodTypeException.cpp \
     Military.cpp \
-    Battalion.cpp \
-    ParsingException.cpp \
-    LimitedDataLists.cpp \
-    JsonPrasingAddition.cpp \
-    FileException.cpp \
-    mainwindow.cpp
+    ParsingException.cpp
 
 HEADERS += \
+        MainWindow.hpp \
     BadBloodTypeException.hpp \
+    BasicFunctionality.hpp \
+    Battalion.hpp \
+    BloodType.hpp \
+    FileException.hpp \
+    JsonParsingAddition.hpp \
     LimitedDataLists.hpp \
     Military.hpp \
-    Battalion.hpp \
-    BasicFunctionality.hpp \
-    ParsingException.hpp \
-    JsonParsingAddition.hpp \
-    FileException.hpp \
-    mainwindow.hpp
+    ParsingException.hpp
 
 FORMS += \
-    MainWindow.ui
+        MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    BattalionData.json
 
 RESOURCES += \
     BattalionData.qrc

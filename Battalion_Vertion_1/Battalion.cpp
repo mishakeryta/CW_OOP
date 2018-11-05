@@ -78,3 +78,12 @@ QJsonObject Battalion::toJsonOnject() const
     jsonBattalion.insert("militaries",jsonMilitaries);
     return jsonBattalion;
 }
+
+Military& Battalion::getMilitary(size_t index)
+{
+    return militaries.at(index);
+}
+vector<Military>& Battalion::getMilitaries()
+{
+    return militaries;
+}
