@@ -2,14 +2,20 @@
 #define BATTALION_HPP
 #include "BasicFunctionality.hpp"
 #include "Military.hpp"
-#include "NoFileException.hpp"
+#include "FileException.hpp"
 #include "ParsingException.hpp"
+#include <stdexcept>
+#include <QFile>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QByteArray>
 using namespace std;
 class Battalion
 {
 public:
     Battalion(){}
-    Battalion readFormJson(const string& name);
+    const Battalion& readFormJson(const string& name);
 private:
     string name;
     vector<Military> militaries;

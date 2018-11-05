@@ -2,7 +2,7 @@
 #define NOFILEEXCEPTION_HPP
 #include <stdexcept>
 using namespace std;
-class NoFileException:public logic_error
+class FileException:public logic_error
 {
 public:
     using std::logic_error::logic_error;

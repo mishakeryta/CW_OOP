@@ -1,46 +1,61 @@
 #include "Battalion.hpp"
-#include <stdexcept>
-#include <QFile>
-#include <QJsonObject>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QByteArray>
 
 
-Battalion Battalion::readFormJson(const string& name)
+const Battalion& Battalion::readFormJson(const string& name)
 {
-    if(name.length() <= 6)
+    if(name.length() <= 6  || name.substr(name.find_last_of('.')+1) != "json")
     {
-        throw ParsingException("Bad json name\n");
-    }
-    if (name.substr(name.find_last_of('.'+1)) == "json")
-    {
-       throw ParsingException("Bad json name\n");
+        throw FileException("Погана назва json файлу");
     }
     QFile jsonFile (QString::fromStdString(name));
-    if(!jsonFile.open(QIODevice::ReadOnly)) {//Відкриття файлу з запитаннями і перевірка чи правильно відкрився
-                throw NoFileException("Connot open file");
+    if(!jsonFile.open(QIODevice::ReadOnly))//Відкриття файлу з запитаннями і перевірка чи правильно відкрився
+    {
+        throw FileException("Connot open file");
     }
     QByteArray allFromJsonFile = jsonFile.readAll();
     QJsonDocument jsonDocument = QJsonDocument::fromJson(allFromJsonFile);
-    if(jsonDocument.isNull()) exit(-1);
-    if(jsonDocument.isObject()) {
-        throw ParsingException("No Battalion onject in file "+ name);
+    if(jsonDocument.isNull())
+    {
+        throw ParsingException("Battalion","object",false);
+    }
+    if(!jsonDocument.isObject())
+    {
+        throw ParsingException("Battalion","object",true);
     }
     QJsonObject jsonBattalion = jsonDocument.object();
-    this->name = jsonBattalion[QString("name")].toString().toStdString();
+    string tmp_name = getStringProperty(jsonBattalion,"name").toStdString();
+
+    if(!jsonBattalion.contains("militaries"))
+    {
+        throw ParsingException("Battalion","militaries",false);
+    }
+    if(!jsonBattalion["militaries"].isArray())
+    {
+        throw ParsingException("Battalion","militaries",true);
+    }
     QJsonArray jsonMilitaries = jsonBattalion[QString("militaries")].toArray();
     vector<Military> tmp_militaries;
     for(int i = 0; i < jsonMilitaries.size();++i)
     {
         if(jsonMilitaries[i].isObject())
         {
-            tmp_militaries.push_back(jsonMilitaries[i].toObject());
+            try
+            {
+                tmp_militaries.emplace_back(jsonMilitaries[i].toObject());
+            }
+            catch(ParsingException exc)
+            {
+                throw ParsingException(typeid(*this).name(),
+                                 "militaries["+to_string(i)+"]."+exc.getProperty(),
+                                 exc.getBadFormat());
+            }
         }
         else
         {
-            throw(ParsingException(string("Military wiht index ") + to_string(i) + " is not an object\n"));
+            throw ParsingException("Battalion",string("militaries[") + to_string(i) + "]",true);
         }
     }
-    militaries = tmp_militaries;
+    this->militaries = tmp_militaries;
+    this->name = tmp_name;
+    return *this;
 }

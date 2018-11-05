@@ -7,7 +7,9 @@
 #include "ParsingException.hpp"
 #include "BadBloodTypeException.hpp"
 #include <QJsonObject>
+#include <QJsonArray>
 #include "LimitedDataLists.hpp"
+#include "JsonParsingAddition.hpp"
 
 using namespace std;
 
@@ -16,7 +18,7 @@ class Military
 public:
 //конструктори
     Military();
-    Military(unsigned number, const string& surname, const string& name, unsigned age,unsigned bloodType,string runk,const vector<string>& ammunition);
+    Military(unsigned number, const string& surname, const string& name, unsigned age,const string& bloodType,const string& runk,const vector<string>& ammunition);
     Military(const QJsonObject& jsonObj);
 
 //властивості
@@ -32,19 +34,24 @@ public:
     Military&  setAge(unsigned age);
     unsigned getAge() const {return age;  }
 
-    Military& setBloodType(unsigned bloodType);
-    unsigned getBloodType()  const {return  bloodType;  }
+    Military& setBloodType(const string& bloodType);
+    string getBloodType()  const {return  bloodType;  }
+
+    Military& setRunk(const string& runk);
+    string getRunk() const{return runk; }
 
     Military& setAmmunition(const vector<string>& ammunition);
     vector<string> getAmmunition() const {return ammunition;  }
 private:
+
     unsigned number;
     string surname;
     string name;
     unsigned age;
-    unsigned bloodType;
+    string bloodType;
     string runk;
     vector<string> ammunition;
+
 
 };
 

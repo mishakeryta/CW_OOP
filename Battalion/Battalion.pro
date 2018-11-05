@@ -31,8 +31,9 @@ SOURCES += \
     Military.cpp \
     Battalion.cpp \
     ParsingException.cpp \
-    NoFileException.cpp \
-    LimitedDataLists.cpp
+    LimitedDataLists.cpp \
+    JsonPrasingAddition.cpp \
+    FileException.cpp
 
 HEADERS += \
     MainWindow.hpp \
@@ -42,7 +43,8 @@ HEADERS += \
     Battalion.hpp \
     BasicFunctionality.hpp \
     ParsingException.hpp \
-    NoFileException.hpp
+    JsonParsingAddition.hpp \
+    FileException.hpp
 
 FORMS += \
     MainWindow.ui

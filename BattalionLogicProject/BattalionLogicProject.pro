@@ -7,7 +7,7 @@ SOURCES += \
         main.cpp \
     Military.cpp \
     BadBloodTypeException.cpp \
-    LimiteDataLists.cpp
+    LimitedDataLists.cpp
 
 HEADERS += \
     Military.hpp \
