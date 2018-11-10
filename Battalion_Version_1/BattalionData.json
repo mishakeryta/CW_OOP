@@ -1,0 +1,42 @@
+{
+    "name": "AAAA",
+    "militaries": [
+        {
+        "number":"1",
+        "surname": "Мітру",
+        "name": "Роберт",
+         "age": "19",
+         "bloodType": "2-",
+         "runk": "Генерал-майор",
+         "ammunitions": ["Пістоль","Пістоль 22"]
+        },
+        {
+        "number":"2",
+        "surname": "Керита",
+        "name": "Міша",
+         "age": "18",
+         "bloodType": "1-",
+         "runk": "Генерал-полковник",
+         "ammunitions": ["Пістоль","Пістоль 22"]
+        },
+        {
+        "number":"3",
+        "surname": "Мітру",
+        "name": "Роберт",
+         "age": "19",
+         "bloodType": "2-",
+         "runk": "Генерал-майор",
+         "ammunitions": ["Пістоль","Пістоль 22"]
+        },
+        {
+        "number":"4",
+        "surname": "Мітру",
+        "name": "Роберт",
+         "age": "19",
+         "bloodType": "2-",
+         "runk": "Генерал-майор",
+         "ammunitions": ["Пістоль","Пістоль 22"]
+        }
+    ]
+}
+
