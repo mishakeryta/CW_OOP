@@ -20,41 +20,43 @@ class Military
 public:
 //конструктори
     Military();
-    Military(unsigned number, const string& surname, const string& name, unsigned age,const string& bloodType,const string& runk,const vector<string>& ammunition);
+    Military(unsigned number, const QString& surname, const QString& name, unsigned age,const QString& bloodType,const QString& runk,const vector<QString>& ammunition);
     Military(const QJsonObject& jsonObj);
 
 //властивості
     Military& setNumber(unsigned number);
     unsigned getNumber() const { return this->number;  }
 
-    Military& setSurname(const string& surname);
-    string getSurname() const{ return surname;  }
+    static bool isSurnameOrName(const QString& text);
+    Military& setSurname(const QString& surname);
+    QString getSurname() const{ return surname;  }
 
-    Military& setName(const string& name);
-    string getName() const { return name;  }
+
+    Military& setName(const QString& name);
+    QString getName() const { return name;  }
 
     Military&  setAge(unsigned age);
     unsigned getAge() const {return age;  }
 
-    Military& setBloodType(const string& bloodType);
-    string getBloodType()  const {return  bloodType;  }
+    Military& setBloodType(const QString& bloodType);
+    QString getBloodType()  const {return  bloodType;  }
 
-    Military& setRunk(const string& runk);
-    string getRunk() const{return runk; }
+    Military& setRunk(const QString& runk);
+    QString getRunk() const{return runk; }
 
-    Military& setAmmunition(const vector<string>& ammunition);
-    vector<string>& getAmmunition()  {return ammunition;  }
-    const vector<string>& getAmmunition()const {return ammunition; }
+    Military& setAmmunition(const vector<QString>& ammunition);
+    vector<QString>& getAmmunition()  {return ammunition;  }
+    const vector<QString>& getAmmunition()const {return ammunition; }
     QJsonObject toQJsonObject() const;
 private:
 
     unsigned number;
-    string surname;
-    string name;
+    QString surname;
+    QString name;
     unsigned age;
-    string bloodType;
-    string runk;
-    vector<string> ammunition;
+    QString bloodType;
+    QString runk;
+    vector<QString> ammunition;
 
 
 };

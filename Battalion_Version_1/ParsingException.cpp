@@ -1,8 +1,8 @@
 #include "ParsingException.hpp"
 
-string ParsingException::what() const
+QString ParsingException::what() const
 {
-    string text;
+    QString text;
     text+= "Тип об\'єкта : " + objectType + ". ";
     if(this->badFormat)
     {
@@ -14,12 +14,12 @@ string ParsingException::what() const
     }
     return text;
 }
-ParsingException& ParsingException::setObjectType(const string& objType)
+ParsingException& ParsingException::setObjectType(const QString& objType)
 {
     objectType = objType;
     return *this;
 }
-ParsingException& ParsingException::setProperty(const string& property)
+ParsingException& ParsingException::setProperty(const QString& property)
 {
     this->property = property;
     return *this;
@@ -30,7 +30,7 @@ ParsingException& ParsingException::setBadFormat(bool badFormat)
     return *this;
 }
 
-ParsingException& ParsingException::setAdditionInfo(const string& additionInfo)
+ParsingException& ParsingException::setAdditionInfo(const QString& additionInfo)
 {
     this->additionInfo = additionInfo;
     return  *this;

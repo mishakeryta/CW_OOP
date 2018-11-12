@@ -2,17 +2,17 @@
 #define CONVERTER_HPP
 
 #include <string>
-
+#include <QString>
 class Converter
 {
 public:
     template<class ForwardIter, class ConvertType>
-    static std::string toString(ForwardIter begin, ForwardIter end,ConvertType convert);
+    static QString toString(ForwardIter begin, ForwardIter end,ConvertType convert);
 };
 template<class ForwardIter, class ConvertType>
-std::string Converter::toString(ForwardIter begin, ForwardIter end, ConvertType convert)
+QString Converter::toString(ForwardIter begin, ForwardIter end, ConvertType convert)
 {
-    std::string result;
+    QString result;
     while(begin!= end)
     {
         result+= convert(*begin);

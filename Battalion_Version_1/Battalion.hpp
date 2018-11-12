@@ -16,13 +16,13 @@ class Battalion
 {
 public:
     Battalion(){}
-    const Battalion& readFormJson(const string& name);
+    const Battalion& readFormJson(const QString& name);
     QJsonObject toJsonOnject() const;
-    const string& getName() const{return  name; }
+    const QString& getName() const{return  name; }
     Military& getMilitary(size_t index);
     vector<Military>& getMilitaries();
 private:
-    string name;
+    QString name;
     vector<Military> militaries;
 };
 

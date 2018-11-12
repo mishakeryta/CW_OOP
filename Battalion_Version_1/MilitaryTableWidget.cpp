@@ -7,12 +7,13 @@
 MilitaryTableWidget::MilitaryTableWidget(QWidget* perent):QTableWidget (perent)
 {
 
-    std::vector<std::string> columnNames = {"№"  ,   "Прізвище"   ,   "Ім‘я"   , "вік"   ,  "група крові"  ,  "звання"  ,  "боєкомплект "  };
+    std::vector<QString> columnNames = {"№"  ,   "Прізвище"   ,   "Ім‘я"   , "вік"   ,  "група крові"  ,  "звання"  ,  "боєкомплект "  };
     setColumnCount(static_cast<int>(columnNames.size()));
     for(size_t i = 0; i < columnNames.size();++i)
     {
-        setHorizontalHeaderItem(static_cast<int>(i),new QTableWidgetItem(QString::fromStdString(columnNames[i])));
+        setHorizontalHeaderItem(static_cast<int>(i),new QTableWidgetItem(columnNames[i]));
     }
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 MilitaryTableWidget& MilitaryTableWidget::setMilitaries(const vector<Military>& militaries)
@@ -25,24 +26,25 @@ MilitaryTableWidget& MilitaryTableWidget::setMilitaries(const vector<Military>& 
         vector<QTableWidgetItem*> rowItems =
         {
             new QTableWidgetItem(QString::number(militaries[row].getNumber())),
-            new QTableWidgetItem(QString::fromStdString(militaries[row].getSurname())),
-            new QTableWidgetItem(QString::fromStdString(militaries[row].getName())),
+            new QTableWidgetItem(militaries[row].getSurname()),
+            new QTableWidgetItem(militaries[row].getName()),
             new QTableWidgetItem(QString::number(militaries[row].getAge())),
-            new QTableWidgetItem(QString::fromStdString(militaries[row].getBloodType())),
-            new QTableWidgetItem(QString::fromStdString(militaries[row].getRunk())),
+            new QTableWidgetItem(militaries[row].getBloodType()),
+            new QTableWidgetItem(militaries[row].getRunk()),
         };
-        string listOfAmmunitions = accumulate(militaries[row].getAmmunition().begin(),
+        QString listOfAmmunitions = accumulate(militaries[row].getAmmunition().begin(),
                                               militaries[row].getAmmunition().end(),
-                                              string(),[](const string& item1,const string& item2)
+                                              QString(),[](const QString& item1,const QString& item2)
         {
             return item1 + '\n' + item2;
         });
-        rowItems.push_back(new QTableWidgetItem(QString::fromStdString(listOfAmmunitions)));
+
+        rowItems.push_back(new QTableWidgetItem(listOfAmmunitions));
         for(size_t column = 0; column < rowItems.size();++column)
         {
             setItem(static_cast<int>(row),static_cast<int>(column),rowItems[column]);
         }
-
+        resizeRowToContents(static_cast<int>(row));
     }
 
     return *this;

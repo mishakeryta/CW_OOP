@@ -1,8 +1,8 @@
 #include "Military.hpp"
-
+#include <QChar>
 Military::Military():number(0),age(0) { }
 
-Military::Military(unsigned number, const string& surname, const string& name, unsigned age,const string& bloodType,const string& runk,const vector<string>& ammunition):
+Military::Military(unsigned number, const QString& surname, const QString& name, unsigned age,const QString& bloodType,const QString& runk,const vector<QString>& ammunition):
     number(number),
     surname(surname),
     name(name),
@@ -16,6 +16,7 @@ Military::Military(const QJsonObject& jsonObj)
 {
     try
     {
+
         Military tmp_military = Military();
         int tmpIntVal = getIntProperty(jsonObj,"number");
         if(tmpIntVal <= 0)
@@ -23,16 +24,16 @@ Military::Military(const QJsonObject& jsonObj)
             throw ParsingException("","age",true);
         }
         tmp_military.setNumber(static_cast<unsigned>(tmpIntVal));
-        tmp_military.setSurname(getStringProperty(jsonObj,"surname").toStdString());
-        tmp_military.setName(getStringProperty(jsonObj,"name").toStdString());
+        tmp_military.setSurname(getStringProperty(jsonObj,"surname"));
+        tmp_military.setName(getStringProperty(jsonObj,"name"));
         tmpIntVal = getIntProperty(jsonObj,"age");
         if(tmpIntVal < 0)
         {
             throw ParsingException("","age",true);
         }
         tmp_military.setAge(static_cast<unsigned>(tmpIntVal));
-        tmp_military.setBloodType(getStringProperty(jsonObj,"bloodType").toStdString());
-        tmp_military.setRunk(getStringProperty(jsonObj,"runk").toStdString());
+        tmp_military.setBloodType(getStringProperty(jsonObj,"bloodType"));
+        tmp_military.setRunk(getStringProperty(jsonObj,"runk"));
         if(!jsonObj.contains("ammunitions"))
         {
             throw ParsingException("","ammunitions",false);
@@ -42,14 +43,14 @@ Military::Military(const QJsonObject& jsonObj)
             throw ParsingException("","ammunitions",true);
         }
         QJsonArray jsonAmmunitions = jsonObj["ammunitions"].toArray();
-        vector<string> tmp_ammunition;
+        vector<QString> tmp_ammunition;
         for(int i = 0; i < jsonAmmunitions.size();++i)
         {
             if(!jsonAmmunitions[i].isString())
             {
-                throw ParsingException("",string("ammunitions[")  + to_string(i) + "]",true);
+                throw ParsingException("",QString("ammunitions[")  + QString::number(i) + "]",true);
             }
-            tmp_ammunition.push_back(jsonAmmunitions[i].toString().toStdString());
+            tmp_ammunition.push_back(jsonAmmunitions[i].toString());
         }
 
         (*this) = move(tmp_military);
@@ -68,13 +69,42 @@ Military& Military::setNumber(unsigned number)
     this->number = number;
     return *this;
 }
-Military& Military::setSurname(const string& surname)
+bool Military::isSurnameOrName(const QString& text)
+{
+    bool wasLetter = false;
+    int i = 0;
+    while(i<text.size())
+    {
+        if(text[i].isUpper())
+        {
+            wasLetter = true;
+            ++i;
+            break;
+        }
+        ++i;
+    }
+    if(!wasLetter)
+    {
+        return false;
+    }
+    while(i <  text.size())
+    {
+       if(!text[i].isLetter())
+        {
+            return false;
+        }
+        ++i;
+    }
+    return true;
+
+}
+Military& Military::setSurname(const QString& surname)
 {
     this->surname = surname;
     return *this;
 }
 
-Military& Military::setName(const string& name)
+Military& Military::setName(const QString& name)
 {
     this->name = name;
     return *this;
@@ -85,14 +115,14 @@ Military& Military::setAge(unsigned age)
     return *this;
 }
 
-Military& Military::setRunk(const string& runk)
+Military& Military::setRunk(const QString& runk)
 {
     this->runk = runk;
     return *this;
 }
-Military& Military::setBloodType(const string& bloodType)
+Military& Military::setBloodType(const QString& bloodType)
 {
-    const vector<string>& bloodTypes = LimitedDataLists::Get().getBloodTypes();
+    const vector<QString>& bloodTypes = LimitedDataLists::Get().getBloodTypes();
     bool exist = false;
     for(const auto& type:bloodTypes)
     {
@@ -113,16 +143,18 @@ QJsonObject Military::toQJsonObject() const
 {
     QJsonObject jsonMilitary;
     jsonMilitary.insert("number",QJsonValue(QString::number(number)));
-    jsonMilitary.insert("surname",QJsonValue(QString::fromStdString(surname)));
-    jsonMilitary.insert("name",QJsonValue(QString::fromStdString(name)));
+    jsonMilitary.insert("surname",QJsonValue(surname));
+    jsonMilitary.insert("name",QJsonValue(name));
     jsonMilitary.insert("age",QJsonValue(QString::number(age)));
-    jsonMilitary.insert("runk",QJsonValue(QString::fromStdString(runk)));
+    jsonMilitary.insert("bloodType",QJsonValue(bloodType));
+    jsonMilitary.insert("runk",QJsonValue(runk));
+
     QJsonArray jsonAmmunisions;
     for(size_t i = 0; i < ammunition.size();++i)
     {
-        jsonAmmunisions.push_back(QJsonValue(QString::fromStdString(ammunition[i])));
+        jsonAmmunisions.push_back(QJsonValue(ammunition[i]));
     }
-    jsonMilitary.insert("ammunusions",jsonAmmunisions);
+    jsonMilitary.insert("ammunitions",jsonAmmunisions);
     return jsonMilitary;
 }
 

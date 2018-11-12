@@ -1,11 +1,15 @@
 #include "Battalion.hpp"
-const Battalion& Battalion::readFormJson(const string& name)
+#include <QDir>
+#include <QFileInfo>
+const Battalion& Battalion::readFormJson(const QString& name)
 {
-    if(name.length() <= 6  || name.substr(name.find_last_of('.')+1) != "json")
+    QString tmp = QFileInfo(name).suffix();
+    if(name.length() <= 6  || QFileInfo(name).suffix() != QString("json"))
     {
         throw FileException("Погана назва json файлу");
     }
-    QFile jsonFile (QString::fromStdString(name));
+
+    QFile jsonFile(name);
     if(!jsonFile.open(QIODevice::ReadOnly))//Відкриття файлу з запитаннями і перевірка чи правильно відкрився
     {
         throw FileException("Не можливо відкрити файл, можливо його просто не існує.");
@@ -21,7 +25,7 @@ const Battalion& Battalion::readFormJson(const string& name)
         throw ParsingException("Battalion","object",true);
     }
     QJsonObject jsonBattalion = jsonDocument.object();
-    string tmp_name = getStringProperty(jsonBattalion,"name").toStdString();
+    QString tmp_name = getStringProperty(jsonBattalion,"name");
 
     if(!jsonBattalion.contains("militaries"))
     {
@@ -43,14 +47,14 @@ const Battalion& Battalion::readFormJson(const string& name)
             }
             catch(ParsingException exc)
             {
-                throw ParsingException(typeid(*this).name(),
-                                 "militaries["+to_string(i)+"]."+exc.getProperty(),
+                throw ParsingException("Battalion",
+                                 "militaries["+QString::number(i)+"]."+exc.getProperty(),
                                  exc.getBadFormat());
             }
         }
         else
         {
-            throw ParsingException("Battalion",string("militaries[") + to_string(i) + "]",true);
+            throw ParsingException("Battalion",QString("militaries[") + QString::number(i) + "]",true);
         }
     }
     this->militaries = tmp_militaries;
@@ -60,17 +64,8 @@ const Battalion& Battalion::readFormJson(const string& name)
 }
 QJsonObject Battalion::toJsonOnject() const
 {
-    if(name.length() <= 6  || name.substr(name.find_last_of('.')+1) != "json")
-    {
-        throw FileException("Погана назва json файлу");
-    }
-    QFile jsonFile(QString::fromStdString(name));
-    if(!jsonFile.open(QIODevice::WriteOnly))
-    {
-        throw FileException("Не виходить видкрити файл \"" + name + "\".");
-    }
     QJsonObject jsonBattalion;
-    jsonBattalion.insert("name",QString::fromStdString(this->name));
+    jsonBattalion.insert("name",this->name);
     QJsonArray jsonMilitaries;
     for(size_t i = 0; i < militaries.size();++i)
     {

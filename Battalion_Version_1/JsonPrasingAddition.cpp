@@ -1,8 +1,8 @@
 #include "JsonParsingAddition.hpp"
 
-QString getStringProperty(const QJsonObject& jsonObj,const string& property)
+QString getStringProperty(const QJsonObject& jsonObj,const QString& property)
 {
-    QString key_property = QString::fromStdString(property);
+    QString key_property = property;
 
     if(jsonObj.find(key_property) == jsonObj.constEnd())
     {
@@ -14,7 +14,7 @@ QString getStringProperty(const QJsonObject& jsonObj,const string& property)
     }
     return jsonObj[key_property].toString();
 }
-int getIntProperty(const QJsonObject& jsonObj,const string& property)
+int getIntProperty(const QJsonObject& jsonObj,const QString& property)
 {
     bool successfulIntConvert = true;
     int tmpIntNumber = getStringProperty(jsonObj,property).toInt(&successfulIntConvert);

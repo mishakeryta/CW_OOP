@@ -5,7 +5,7 @@
 #include <QString>
 #include <QJsonObject>
 
-QString getStringProperty(const QJsonObject& jsonObj,const string& property);
-int getIntProperty(const QJsonObject& jsonObj, const string& property);
+QString getStringProperty(const QJsonObject& jsonObj,const QString& property);
+int getIntProperty(const QJsonObject& jsonObj, const QString& property);
 
 #endif // JSONPARSINGADDITION_HPP

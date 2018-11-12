@@ -35,7 +35,10 @@ SOURCES += \
     BadBloodTypeException.cpp \
     Military.cpp \
     ParsingException.cpp \
-    MilitaryTableWidget.cpp
+    MilitaryTableWidget.cpp \
+    dialog.cpp \
+    AddNewMilitaryDialog.cpp \
+    justnew.cpp
 
 HEADERS += \
         MainWindow.hpp \
@@ -48,10 +51,15 @@ HEADERS += \
     Military.hpp \
     ParsingException.hpp \
     Converter.hpp \
-    MilitaryTableWidget.hpp
+    MilitaryTableWidget.hpp \
+    dialog.h \
+    AddNewMilitaryDialog.h \
+    justnew.h
 
 FORMS += \
-        MainWindow.ui
+        MainWindow.ui \
+    dialog.ui \
+    AddNewMilitaryDialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -61,5 +69,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     BattalionData.json
 
-RESOURCES += \
-    BattalionData.qrc
+RESOURCES +=

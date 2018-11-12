@@ -23,6 +23,8 @@ private slots:
 
     void on_pbSave_clicked();
 
+    void on_pbAdd_clicked();
+
 private:
     Battalion battalion;
     void MilitariesToQWidgetTable(QTableWidget& tabel,const vector<Military>& vector);

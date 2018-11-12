@@ -6,31 +6,31 @@
 class ParsingException
 {
 public:
-    ParsingException(const string& objType,const string& property,bool badFormat,const string& additionInfo = ""):objectType(objType),
+    ParsingException(const QString& objType,const QString& property,bool badFormat,const QString& additionInfo = ""):objectType(objType),
         property(property),
         badFormat(badFormat),
         additionInfo(additionInfo)
     {
     }
 
-    const string& getObjectType()const { return objectType; }
-    ParsingException& setObjectType(const string& objType);
+    const QString& getObjectType()const { return objectType; }
+    ParsingException& setObjectType(const QString& objType);
 
-    const string& getProperty() const { return property; }
-    ParsingException& setProperty(const string& property);
+    const QString& getProperty() const { return property; }
+    ParsingException& setProperty(const QString& property);
 
     bool getBadFormat()const { return badFormat; }
     ParsingException& setBadFormat(bool badFormat);
 
-    const string& getAdditionInfo() const { return additionInfo; }
-    ParsingException& setAdditionInfo(const string& additionInfo);
+    const QString& getAdditionInfo() const { return additionInfo; }
+    ParsingException& setAdditionInfo(const QString& additionInfo);
 
-    string what() const;
+    QString what() const;
 private:
-    string objectType;
-    string property;
+    QString objectType;
+    QString property;
     bool badFormat;
-    string additionInfo;
+    QString additionInfo;
 
 
 };

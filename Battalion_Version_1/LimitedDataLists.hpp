@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <set>
+#include <QString>
 using namespace std;
 class LimitedDataLists
 {
@@ -10,14 +12,19 @@ class LimitedDataLists
 
 public:
     static LimitedDataLists& Get();
-
-    const vector<string>& getMilitaryProperties()const{return militaryProperties;}
-    const vector<string>& getBloodTypes() const { return bloodTypes;}
+    const vector<QString> &getMilitaryProperties()const{return militaryProperties;}
+    const vector<QString>& getBloodTypes() const { return bloodTypes;}
+    const vector<QString>& getRunks() const {return runks;}
+    const set<QString>& getAutomatic() const { return  automatic;}
+    const set<QString>& getPistols() const { return pistols;}
+    const set<QString>& getGrenageLauncher() const { return grenadeLauncher; }
 private:
-    vector<string> runks;
-    vector<string> bloodTypes;
-    vector<string> ammunitions;
-    vector<string> militaryProperties;
+    vector<QString> runks;
+    vector<QString> bloodTypes;
+    set<QString> automatic;
+    set<QString> pistols;
+    set<QString> grenadeLauncher;
+    vector<QString> militaryProperties;
     LimitedDataLists();
     ~LimitedDataLists(){}
 };
