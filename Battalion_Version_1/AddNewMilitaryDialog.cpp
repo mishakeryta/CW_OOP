@@ -6,7 +6,7 @@
 #include <string>
 #include "Military.hpp"
 using namespace std;
-
+//конструктор діалогу додавання нового елементу
 AddNewMilitaryDialog::AddNewMilitaryDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddNewMilitaryDialog)

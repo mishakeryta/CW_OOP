@@ -16,14 +16,14 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="MilitaryTableWidget" name="mtwMilitaries" native="true"/>
-    </item>
-    <item>
      <widget class="QLabel" name="lBattlionName">
       <property name="text">
        <string/>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="MilitaryTableWidget" name="mtwMilitaries" native="true"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -50,6 +50,9 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QPlainTextEdit" name="pteOutput"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -65,10 +68,30 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionPrevSave"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Редагувати</string>
+    </property>
+    <addaction name="actionAddNewMilitary"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>Вигляд</string>
+    </property>
+    <addaction name="actionTask1"/>
+    <addaction name="action_task3_1"/>
+    <addaction name="action_task3_2"/>
+    <addaction name="action_task3_3"/>
+    <addaction name="action_task4"/>
+    <addaction name="action_task5"/>
+    <addaction name="actionTask2"/>
    </widget>
    <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -79,14 +102,54 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <action name="action">
+  <action name="actionSave">
    <property name="text">
     <string>Зберегти </string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="actionPrevSave">
    <property name="text">
     <string>Повернути до поперднього збереження</string>
+   </property>
+  </action>
+  <action name="actionAddNewMilitary">
+   <property name="text">
+    <string>Додати</string>
+   </property>
+  </action>
+  <action name="action_task3_1">
+   <property name="text">
+    <string>Вивести бійців які мають більше однієї одиниці зброї</string>
+   </property>
+  </action>
+  <action name="action_task4">
+   <property name="text">
+    <string>Вивести бійців які мають першу групу крові резус мінус і четверту групу резус плюс віком до 25 років</string>
+   </property>
+  </action>
+  <action name="action_task5">
+   <property name="text">
+    <string>Вивести рядових віком до 20 років без боєкомплекту</string>
+   </property>
+  </action>
+  <action name="action_task3_2">
+   <property name="text">
+    <string>Вивести бійців які мають АК-47 і гранатомет</string>
+   </property>
+  </action>
+  <action name="action_task3_3">
+   <property name="text">
+    <string>Вивести бійців, які мають пістолет і будь-який автомат</string>
+   </property>
+  </action>
+  <action name="actionTask1">
+   <property name="text">
+    <string>Порахувати кількість одиниць озброєння виданого бійцям, зрупувавши бійців по званню</string>
+   </property>
+  </action>
+  <action name="actionTask2">
+   <property name="text">
+    <string>Визначити середній вік бійців для кожного звання і вцілому по батальйону.</string>
    </property>
   </action>
  </widget>

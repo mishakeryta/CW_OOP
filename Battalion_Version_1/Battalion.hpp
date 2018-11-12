@@ -11,6 +11,7 @@
 #include <QJsonDocument>
 #include <QByteArray>
 #include <QJsonValue>
+#include <functional>
 using namespace std;
 class Battalion
 {
@@ -21,6 +22,7 @@ public:
     const QString& getName() const{return  name; }
     Military& getMilitary(size_t index);
     vector<Military>& getMilitaries();
+    vector<Military> getMilitaries(function<bool(const Military&)> pred);
 private:
     QString name;
     vector<Military> militaries;

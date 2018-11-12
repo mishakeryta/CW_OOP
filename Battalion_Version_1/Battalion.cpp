@@ -83,3 +83,16 @@ vector<Military>& Battalion::getMilitaries()
 {
     return militaries;
 }
+
+vector<Military> Battalion::getMilitaries(function<bool(const Military&)> pred)
+{
+    vector<Military> suitMilitaries;
+    for(auto& military:militaries)
+    {
+        if(pred(military))
+        {
+            suitMilitaries.push_back(military);
+        }
+    }
+    return suitMilitaries;
+}
